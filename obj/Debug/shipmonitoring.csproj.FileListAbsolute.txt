@@ -1,0 +1,13 @@
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\bin\Debug\shipmonitoring.exe.config
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\bin\Debug\shipmonitoring.exe
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\bin\Debug\shipmonitoring.pdb
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.csprojAssemblyReference.cache
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.Properties.Resources.resources
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.csproj.GenerateResource.cache
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.exe
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.pdb
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.Dashboard.Main.resources
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dell\Documents\Visual Studio 2019\Projects\shipmonitoring\obj\Debug\shipmonitoring.csproj.CopyComplete
