@@ -13,19 +13,19 @@ namespace shipmonitoring.Data
 {
     class Payload
     {
-        public string Date { get; set; }
-        public string Time { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public string Current { get; set; }
-        public string Voltage { get; set; }
-        public string WaveHeight { get; set; }
-        public string WavePeriod { get; set; }
-        public string WavePower { get; set; }
-        public string WaterTemp { get; set; }
-        public string AirTemp { get; set; }
+        public long Date { get; set; }
+        public long Time { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
+        public float Current { get; set; }
+        public float Voltage { get; set; }
+        public float WaveHeight { get; set; }
+        public float WavePeriod { get; set; }
+        public float WavePower { get; set; }
+        public float WaterTemp { get; set; }
+        public float AirTemp { get; set; }
 
-        string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+        readonly string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
         OleDbConnection conn;
 
 
@@ -33,7 +33,7 @@ namespace shipmonitoring.Data
          * Handle membuat directory di MyDocument
          * 
          */
-        public void createDir()
+        public void CreateDir()
         {
             if (!Directory.Exists(path)) System.IO.Directory.CreateDirectory(path);
         }
@@ -44,25 +44,27 @@ namespace shipmonitoring.Data
          * 
          * fitur lanjut
          */
-        public bool readFromDB()
+        public bool ReadFromDB()
         {
-            if (connectDB())
+            if (ConnectDB())
             {
                 try
                 {
                     OleDbCommand cmd = conn.CreateCommand();
                     cmd.CommandText = "Select * from Data where Date(Tanggal) >= Date(now())";
-                    OleDbDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
-                        string pld = "";
-                        JsonConvert.SerializeObject(pld);
+                        while (reader.Read())
+                        {
+                            string pld = "";
+                            JsonConvert.SerializeObject(pld);
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
                     conn.Close();
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Console.WriteLine(Resources.warning_database_baca_gagal);
                     return false;
@@ -76,9 +78,9 @@ namespace shipmonitoring.Data
          * 
          * mengembalikan nilai boolean
          */
-        public bool saveToDB()
+        public bool SaveToDB()
         {
-            if (connectDB())
+            if (ConnectDB())
             {
                 try
                 {
@@ -114,7 +116,7 @@ namespace shipmonitoring.Data
          * 
          * mengembalikan nilai boolean
          */
-        private bool connectDB()
+        private bool ConnectDB()
         {
             string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + "\\Database.accdb";
             conn = new OleDbConnection(connectionString);

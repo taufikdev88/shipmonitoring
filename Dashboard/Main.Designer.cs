@@ -30,13 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
+            this.zedGraphWave = new ZedGraph.ZedGraphControl();
+            this.zedGraphTemp = new ZedGraph.ZedGraphControl();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.txtStatusKoneksi = new System.Windows.Forms.Label();
             this.cmbPort = new System.Windows.Forms.ComboBox();
             this.btnKoneksi = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.zedGraphPower = new ZedGraph.ZedGraphControl();
+            this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutMain.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +50,11 @@
             this.tableLayoutMain.ColumnCount = 2;
             this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutMain.Controls.Add(this.zedGraphWave, 0, 2);
+            this.tableLayoutMain.Controls.Add(this.zedGraphTemp, 0, 2);
             this.tableLayoutMain.Controls.Add(this.panelHeader, 0, 0);
+            this.tableLayoutMain.Controls.Add(this.zedGraphPower, 1, 1);
+            this.tableLayoutMain.Controls.Add(this.gMapControl1, 0, 1);
             this.tableLayoutMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutMain.Name = "tableLayoutMain";
@@ -56,6 +64,38 @@
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutMain.Size = new System.Drawing.Size(966, 450);
             this.tableLayoutMain.TabIndex = 0;
+            // 
+            // zedGraphWave
+            // 
+            this.zedGraphWave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphWave.Location = new System.Drawing.Point(3, 248);
+            this.zedGraphWave.Name = "zedGraphWave";
+            this.zedGraphWave.ScrollGrace = 0D;
+            this.zedGraphWave.ScrollMaxX = 0D;
+            this.zedGraphWave.ScrollMaxY = 0D;
+            this.zedGraphWave.ScrollMaxY2 = 0D;
+            this.zedGraphWave.ScrollMinX = 0D;
+            this.zedGraphWave.ScrollMinY = 0D;
+            this.zedGraphWave.ScrollMinY2 = 0D;
+            this.zedGraphWave.Size = new System.Drawing.Size(477, 199);
+            this.zedGraphWave.TabIndex = 3;
+            this.zedGraphWave.UseExtendedPrintDialog = true;
+            // 
+            // zedGraphTemp
+            // 
+            this.zedGraphTemp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphTemp.Location = new System.Drawing.Point(486, 248);
+            this.zedGraphTemp.Name = "zedGraphTemp";
+            this.zedGraphTemp.ScrollGrace = 0D;
+            this.zedGraphTemp.ScrollMaxX = 0D;
+            this.zedGraphTemp.ScrollMaxY = 0D;
+            this.zedGraphTemp.ScrollMaxY2 = 0D;
+            this.zedGraphTemp.ScrollMinX = 0D;
+            this.zedGraphTemp.ScrollMinY = 0D;
+            this.zedGraphTemp.ScrollMinY2 = 0D;
+            this.zedGraphTemp.Size = new System.Drawing.Size(477, 199);
+            this.zedGraphTemp.TabIndex = 2;
+            this.zedGraphTemp.UseExtendedPrintDialog = true;
             // 
             // panelHeader
             // 
@@ -82,13 +122,15 @@
             // 
             // cmbPort
             // 
+            this.cmbPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPort.FormattingEnabled = true;
             this.cmbPort.Location = new System.Drawing.Point(96, 5);
+            this.cmbPort.MaxDropDownItems = 20;
             this.cmbPort.Name = "cmbPort";
             this.cmbPort.Size = new System.Drawing.Size(135, 24);
             this.cmbPort.TabIndex = 1;
-            this.cmbPort.Click += new System.EventHandler(this.cmbPort_Click);
+            this.cmbPort.Click += new System.EventHandler(this.CmbPort_Click);
             // 
             // btnKoneksi
             // 
@@ -99,7 +141,7 @@
             this.btnKoneksi.TabIndex = 1;
             this.btnKoneksi.Text = "Sambungkan";
             this.btnKoneksi.UseVisualStyleBackColor = true;
-            this.btnKoneksi.Click += new System.EventHandler(this.btnKoneksi_Click);
+            this.btnKoneksi.Click += new System.EventHandler(this.BtnKoneksi_Click);
             // 
             // label1
             // 
@@ -111,9 +153,58 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Pilih Koneksi :";
             // 
+            // zedGraphPower
+            // 
+            this.zedGraphPower.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphPower.Location = new System.Drawing.Point(486, 43);
+            this.zedGraphPower.Name = "zedGraphPower";
+            this.zedGraphPower.ScrollGrace = 0D;
+            this.zedGraphPower.ScrollMaxX = 0D;
+            this.zedGraphPower.ScrollMaxY = 0D;
+            this.zedGraphPower.ScrollMaxY2 = 0D;
+            this.zedGraphPower.ScrollMinX = 0D;
+            this.zedGraphPower.ScrollMinY = 0D;
+            this.zedGraphPower.ScrollMinY2 = 0D;
+            this.zedGraphPower.Size = new System.Drawing.Size(477, 199);
+            this.zedGraphPower.TabIndex = 1;
+            this.zedGraphPower.UseExtendedPrintDialog = true;
+            // 
+            // gMapControl1
+            // 
+            this.gMapControl1.Bearing = 0F;
+            this.gMapControl1.CanDragMap = true;
+            this.gMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gMapControl1.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gMapControl1.GrayScaleMode = false;
+            this.gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMapControl1.LevelsKeepInMemmory = 5;
+            this.gMapControl1.Location = new System.Drawing.Point(3, 43);
+            this.gMapControl1.MarkersEnabled = true;
+            this.gMapControl1.MaxZoom = 2;
+            this.gMapControl1.MinZoom = 2;
+            this.gMapControl1.MouseWheelZoomEnabled = true;
+            this.gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMapControl1.Name = "gMapControl1";
+            this.gMapControl1.NegativeMode = false;
+            this.gMapControl1.PolygonsEnabled = true;
+            this.gMapControl1.RetryLoadTile = 0;
+            this.gMapControl1.RoutesEnabled = true;
+            this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gMapControl1.ShowTileGridLines = false;
+            this.gMapControl1.Size = new System.Drawing.Size(477, 199);
+            this.gMapControl1.TabIndex = 4;
+            this.gMapControl1.Zoom = 0D;
+            this.gMapControl1.OnPositionChanged += new GMap.NET.PositionChanged(this.GMapControl1_OnPositionChanged);
+            // 
             // serialPort
             // 
-            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort_DataReceived);
+            this.serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialPort_DataReceived);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // Main
             // 
@@ -124,7 +215,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Ship Monitor";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Main_Load);
             this.tableLayoutMain.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
@@ -141,6 +232,10 @@
         private System.Windows.Forms.Button btnKoneksi;
         private System.Windows.Forms.Label txtStatusKoneksi;
         private System.IO.Ports.SerialPort serialPort;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private ZedGraph.ZedGraphControl zedGraphPower;
+        private System.Windows.Forms.Timer timer1;
+        private ZedGraph.ZedGraphControl zedGraphWave;
+        private ZedGraph.ZedGraphControl zedGraphTemp;
+        private GMap.NET.WindowsForms.GMapControl gMapControl1;
     }
 }
