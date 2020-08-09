@@ -41,6 +41,7 @@
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tableLayoutMain.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.SuspendLayout();
@@ -100,6 +101,7 @@
             // panelHeader
             // 
             this.tableLayoutMain.SetColumnSpan(this.panelHeader, 2);
+            this.panelHeader.Controls.Add(this.progressBar1);
             this.panelHeader.Controls.Add(this.txtStatusKoneksi);
             this.panelHeader.Controls.Add(this.cmbPort);
             this.panelHeader.Controls.Add(this.btnKoneksi);
@@ -206,6 +208,19 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.BackColor = System.Drawing.SystemColors.Control;
+            this.progressBar1.ForeColor = System.Drawing.Color.White;
+            this.progressBar1.Location = new System.Drawing.Point(867, 9);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(84, 10);
+            this.progressBar1.Step = 1;
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar1.TabIndex = 3;
+            this.progressBar1.Value = 100;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,5 +252,6 @@
         private ZedGraph.ZedGraphControl zedGraphWave;
         private ZedGraph.ZedGraphControl zedGraphTemp;
         private GMap.NET.WindowsForms.GMapControl gMapControl1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

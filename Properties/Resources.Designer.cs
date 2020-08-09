@@ -106,6 +106,15 @@ namespace shipmonitoring.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pilih comport terlebih dahulu.
+        /// </summary>
+        internal static string warning_comport_kosong {
+            get {
+                return ResourceManager.GetString("warning_comport_kosong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Berhasil membaca Database.
         /// </summary>
         internal static string warning_database_baca_berhasil {

@@ -132,6 +132,9 @@
   <data name="koneksi_tersambung" xml:space="preserve">
     <value>Tersambung</value>
   </data>
+  <data name="warning_comport_kosong" xml:space="preserve">
+    <value>Pilih comport terlebih dahulu</value>
+  </data>
   <data name="warning_database_baca_berhasil" xml:space="preserve">
     <value>Berhasil membaca Database</value>
   </data>

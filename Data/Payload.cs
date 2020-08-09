@@ -1,10 +1,6 @@
 ﻿using shipmonitoring.Properties;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using Newtonsoft.Json;
@@ -13,8 +9,15 @@ namespace shipmonitoring.Data
 {
     class Payload
     {
-        public long Date { get; set; }
-        public long Time { get; set; }
+        /*
+         * deklarasi variabel variabel sesuai Key json yg kita olah
+         * 
+         * jika jsonnya {"AbC": "tahu"} maka variabelnya juga AbC
+         * 
+         * {get; set}; artinya bahwa nilai dari variabel ini bisa diambil dan diubah dari luar
+         */
+        private String Date { get; set;  }
+        private String Time { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public float Current { get; set; }
@@ -25,9 +28,15 @@ namespace shipmonitoring.Data
         public float WaterTemp { get; set; }
         public float AirTemp { get; set; }
 
-        readonly string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
-        OleDbConnection conn;
 
+        /*
+         * path nya seperti path yg ada di dashboard, sama sama menuju ke MyDocument/shipmonitoring
+         */
+        readonly string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), Application.ProductName);
+        /*
+         * object yg menjembatani antara aplikasi dengan database microsoftAccess
+         */
+        OleDbConnection conn;
 
         /*
          * Handle membuat directory di MyDocument
@@ -80,11 +89,28 @@ namespace shipmonitoring.Data
          */
         public bool SaveToDB()
         {
+            this.Date = DateTime.Now.ToString("dd-MM-yyyy");
+            this.Time = DateTime.Now.ToString("hh:mm:ss tt");
+
+            /*
+             * jalankan dulu perintah untuk koneksi ke database, jika berhasil, lanjut buat menyimpan datanya
+             */
             if (ConnectDB())
             {
+                /*
+                 * penggunaan try agar jika terjadi error penyimpanan ke database , aplikasi tidak keluar, tp ada warning yg keluar
+                 */
                 try
                 {
+                    /*
+                     * cmd adalah object yg disediakan oleh library untuk menjalankan perintah sql
+                     */
                     OleDbCommand cmd = conn.CreateCommand();
+                    /*
+                     * ini adalah perintah sqlnya "insert into ......"
+                     * 
+                     * string.Format adalah fungsi dari library bawaan c# untuk mempermudah pengisian text  agar tidak ribet
+                     */
                     cmd.CommandText = String.Format("Insert into tbl_data(Tanggal, Waktu, Latitude, Longitude, [Current], Voltage, WaveHeight, WavePeriod, WavePower, WaterTemp, AirTemp) values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')",
                         this.Date,
                         this.Time,
@@ -97,8 +123,19 @@ namespace shipmonitoring.Data
                         this.WavePower,
                         this.WaterTemp,
                         this.AirTemp);
+                    /*
+                     * ekseskusi perintah sqlnya
+                     */
                     cmd.ExecuteNonQuery();
+                    /*
+                     * tutup koneksinya setelah perintah dijalankan
+                     */
                     conn.Close();
+                    /*
+                     * beri tanda untuk keperluan debugging bahwa data sudah berhasil disimpan
+                     * 
+                     * ini hanya akan muncul saat aplikasi dijalankan dari visualStudio
+                     */
                     Console.WriteLine(Resources.warning_database_simpan_berhasil);
                     return true;
                 }
@@ -118,9 +155,15 @@ namespace shipmonitoring.Data
          */
         private bool ConnectDB()
         {
+            /*
+             * koneksi ke databasenya
+             */
             string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path + "\\Database.accdb";
             conn = new OleDbConnection(connectionString);
 
+            /*
+             * coba buka koneksi nya menggunakan try catch, seperti tadi jika terjadi kegagalan, aplikasi tidak langsung error dan hang
+             */
             try
             {
                 conn.Open();
