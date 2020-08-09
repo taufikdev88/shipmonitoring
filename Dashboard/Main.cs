@@ -29,7 +29,7 @@ namespace shipmonitoring.Dashboard
          */
         Payload payload;
         GraphPane powerPane, wavePane, tempPane;
-        RollingPointPairList listVoltage, listCurrent, listWHeight, listWPeriod, listWPower, listWater, listAir;
+        RollingPointPairList listVoltage, listCurrent, listWHeight, listWPower, listWater, listAir;
         GMapOverlay markers;
         GMapMarker center;
         DateTime lastmapposchange;
@@ -228,10 +228,8 @@ namespace shipmonitoring.Dashboard
             wavePane.YAxis.Title.Text = "Wave";
 
             listWHeight = new RollingPointPairList(1200);
-            listWPeriod = new RollingPointPairList(1200);
             listWPower = new RollingPointPairList(1200);
             wavePane.AddCurve("Wave Height", listWHeight, Color.Red, SymbolType.None);
-            wavePane.AddCurve("Wave Period", listWPeriod, Color.Blue, SymbolType.None);
             wavePane.AddCurve("Wave Power", listWPower, Color.Yellow, SymbolType.None);
 
             zedGraphWave.AxisChange();
@@ -455,7 +453,6 @@ namespace shipmonitoring.Dashboard
             listCurrent.Add(dataCount, payload.Current);
 
             listWHeight.Add(dataCount, payload.WaveHeight);
-            listWPeriod.Add(dataCount, payload.WavePeriod);
             listWPower.Add(dataCount, payload.WavePower);
 
             listWater.Add(dataCount, payload.WaterTemp);
